@@ -1,7 +1,7 @@
 {
-  "name": "frida-il2cpp-bridge",
-  "version": "0.2.4",
-  "description": "Frida module to dump, manipulate and hijack any IL2CPP application at runtime with a high level of abstraction.",
+  "name": "frida-il2cpp-bridge-my",
+  "version": "0.2.4-5",
+  "description": "(my:Support IOS)Frida module to dump, manipulate and hijack any IL2CPP application at runtime with a high level of abstraction.",
   "keywords": [
     "frida",
     "il2cpp",
@@ -16,11 +16,11 @@
   "scripts": {
     "build": "tsc"
   },
-  "author": "vfsfitvnm",
+  "author": "vfsfitvnm, my",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vfsfitvnm/frida-il2cpp-bridge.git"
+    "url": "git+https://github.com/yocher/frida-il2cpp-bridge.git"
   },
   "prettier": {
     "tabWidth": 4,
@@ -35,5 +35,12 @@
   "dependencies": {
     "decorator-cache-getter": "^1.0.0",
     "fastest-levenshtein": "^1.0.12"
+  },
+  "bugs": {
+    "url": "https://github.com/yocher/frida-il2cpp-bridge/issues"
+  },
+  "homepage": "https://github.com/yocher/frida-il2cpp-bridge#readme",
+  "directories": {
+    "example": "example"
   }
 }

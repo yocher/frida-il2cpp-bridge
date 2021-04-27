@@ -39,18 +39,23 @@ export let domain: _Il2CppDomain;
  * main().catch(error => console.log(error.stack));
  ```
  */
-export async function initialize() {
-    const il2CppLibraryName =
-        Process.platform == "linux" ? "libil2cpp.so" : Process.platform == "windows" ? "GameAssembly.dll" : platformNotSupported();
-
-    library = await forModule(il2CppLibraryName);
-    unityVersion = await getUnityVersion();
+// my: 改成自己输入libname和版本，因为ios的il2cpp模块名不一样
+// android: libil2cpp.so
+// windows: GameAssembly.dll
+// ios: xxxxx
+// my: 改成自己输入unity版本号,如"2018.4.13f1"
+export async function initialize(mainLibName: string, unityVerString: string) {
+    library = await forModule(mainLibName);
+    //unityVersion = await getUnityVersion();
+    unityVersion = new UnityVersion(unityVerString);
     domain = await _Il2CppDomain.reference;
 }
 
 async function getUnityVersion() {
-    const unityLibraryName =
-        Process.platform == "linux" ? "libunity.so" : Process.platform == "windows" ? "UnityPlayer.dll" : platformNotSupported();
+    return new UnityVersion("2018.4.13f1");
+    /*
+    let unityLibraryName =
+        Process.platform == "linux" ? "libunity.so" : Process.platform == "windows" ? "UnityPlayer.dll" : "";
 
     let unityVersion: UnityVersion | undefined;
     const searchStringHex = "45787065637465642076657273696f6e3a"; // "Expected version: "
@@ -72,5 +77,5 @@ async function getUnityVersion() {
         raise(`Unity version "${unityVersion}" is not valid or supported.`);
     }
 
-    return unityVersion;
+    return unityVersion;*/
 }

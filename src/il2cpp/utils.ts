@@ -310,7 +310,7 @@ export function dump(filePath?: string) {
     if (filePath == undefined) {
         const coreModuleName = "UnityEngine.CoreModule" in domain.assemblies ? "UnityEngine.CoreModule" : "UnityEngine";
         const applicationMethods = domain.assemblies[coreModuleName].image.classes["UnityEngine.Application"].methods;
-
+        //console.log("applicationMethods:", Object.keys(applicationMethods));
         const persistentDataPath = applicationMethods.get_persistentDataPath.invoke<_Il2CppString>().content;
 
         const getIdentifierName = "get_identifier" in applicationMethods ? "get_identifier" : "get_bundleIdentifier";

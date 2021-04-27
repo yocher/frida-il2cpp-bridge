@@ -5,6 +5,8 @@ import { raise } from "../utils/console";
 
 import { library, unityVersion } from "./variables";
 
+import { NativeApiOffset } from "./native_api_offset";
+
 /** @internal */
 export class Api {
     @cache
@@ -24,7 +26,10 @@ export class Api {
 
     @cache
     static get _assemblyGetImage() {
-        return createNF(this.r`assembly_get_image`, "pointer", ["pointer"]);
+        //return createNF(this.r`assembly_get_image`, "pointer", ["pointer"]);
+        return function (assembly: NativePointer): NativePointer {
+            return assembly.readPointer();
+        }
     }
 
     @cache
@@ -39,7 +44,11 @@ export class Api {
 
     @cache
     static get _classFromType() {
-        return createNF(this.r`class_from_type`, "pointer", ["pointer"]);
+        // return createNF(this.r`class_from_type`, "pointer", ["pointer"]);
+        return function (klass: NativePointer): NativePointer {
+            const il2cpp_class_from_type = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_from_type), "pointer", ["pointer"]);
+            return il2cpp_class_from_type(klass) as NativePointer;
+        }
     }
 
     @cache
@@ -74,7 +83,11 @@ export class Api {
 
     @cache
     static get _classGetFields() {
-        return createNF(this.r`class_get_fields`, "pointer", ["pointer", "pointer"]);
+        // return createNF(this.r`class_get_fields`, "pointer", ["pointer", "pointer"]);
+        return function (klass: NativePointer, iter: NativePointer): NativePointer {
+            const il2cpp_class_get_fields = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_get_fields), "pointer", ["pointer", "pointer"]);
+            return il2cpp_class_get_fields(klass, iter) as NativePointer;
+        }
     }
 
     @cache
@@ -84,7 +97,10 @@ export class Api {
 
     @cache
     static get _classGetImage() {
-        return createNF(this.r`class_get_image`, "pointer", ["pointer"]);
+        // return createNF(this.r`class_get_image`, "pointer", ["pointer"]);
+        return function (klass: NativePointer): NativePointer {
+            return klass.readPointer();
+        }
     }
 
     @cache
@@ -99,7 +115,12 @@ export class Api {
 
     @cache
     static get _classGetInterfaces() {
-        return createNF(this.r`class_get_interfaces`, "pointer", ["pointer", "pointer"]);
+        //return createNF(this.r`class_get_interfaces`, "pointer", ["pointer", "pointer"]);
+        return function (klass: NativePointer, iter: NativePointer): NativePointer {
+            const il2cpp_class_get_interface = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_get_interfaces),
+                "pointer", ["pointer", "pointer"]);
+            return il2cpp_class_get_interface(klass, iter) as NativePointer;
+        }
     }
 
     @cache
@@ -109,7 +130,12 @@ export class Api {
 
     @cache
     static get _classGetMethods() {
-        return createNF(this.r`class_get_methods`, "pointer", ["pointer", "pointer"]);
+        // return createNF(this.r`class_get_methods`, "pointer", ["pointer", "pointer"]);
+        return function (klass: NativePointer, iter: NativePointer): NativePointer {
+            const il2cpp_class_get_methods = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_get_methods),
+                "pointer", ["pointer", "pointer"]);
+            return il2cpp_class_get_methods(klass, iter) as NativePointer;
+        }
     }
 
     @cache
@@ -124,7 +150,11 @@ export class Api {
 
     @cache
     static get _classGetParent() {
-        return createNF(this.r`class_get_parent`, "pointer", ["pointer"]);
+        // return createNF(this.r`class_get_parent`, "pointer", ["pointer"]);
+        return function (klass: NativePointer): NativePointer {
+            const il2cpp_class_get_parent = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_get_parent), "pointer", ["pointer"]);
+            return il2cpp_class_get_parent(klass) as NativePointer;
+        }
     }
 
     @cache
@@ -134,7 +164,11 @@ export class Api {
 
     @cache
     static get _classGetType() {
-        return createNF(this.r`class_get_type`, "pointer", ["pointer"]);
+        //return createNF(this.r`class_get_type`, "pointer", ["pointer"]);
+        return function (klass: NativePointer): NativePointer {
+            const il2cpp_class_get_type = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_get_type), "pointer", ["pointer"])
+            return il2cpp_class_get_type(klass) as NativePointer;
+        }
     }
 
     @cache
@@ -149,12 +183,20 @@ export class Api {
 
     @cache
     static get _classIsEnum() {
-        return createNF(this.r`class_is_enum`, "bool", ["pointer"]);
+        //return createNF(this.r`class_is_enum`, "bool", ["pointer"]);
+        return function (klass: NativePointer): boolean {
+            const il2cpp_class_is_enum = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_is_enum), "bool", ["pointer"]);
+            return il2cpp_class_is_enum(klass) as boolean;
+        }
     }
 
     @cache
     static get _classIsInterface() {
-        return createNF(this.r`class_is_interface`, "bool", ["pointer"]);
+        // return createNF(this.r`class_is_interface`, "bool", ["pointer"]);
+        return function (klass: NativePointer): boolean {
+            const il2cpp_class_is_interface = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_is_interface), "bool", ["pointer"]);
+            return il2cpp_class_is_interface(klass) as boolean;
+        }
     }
 
     @cache
@@ -164,17 +206,32 @@ export class Api {
 
     @cache
     static get _classIsStruct() {
-        return createNF(this.r`class_is_valuetype`, "bool", ["pointer"]);
+        //return createNF(this.r`class_is_valuetype`, "bool", ["pointer"]);
+        return function (klass: NativePointer): boolean {
+            const il2cpp_class_is_valuetype = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_class_is_valuetype), "bool", ["pointer"]);
+            return il2cpp_class_is_valuetype(klass) as boolean;
+        }
     }
 
     @cache
     static get _domainGet() {
-        return createNF(this.r`domain_get`, "pointer", []);
+        //return createNF(this.r`domain_get`, "pointer", []);
+        return function (): NativePointer {
+            const il2cpp_domain_get = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_domain_get), "pointer", []);
+            return il2cpp_domain_get() as NativePointer;
+        }
     }
 
     @cache
     static get _domainGetAssemblies() {
-        return createNF(this.r`domain_get_assemblies`, "pointer", ["pointer", "pointer"]);
+        //return createNF(this.r`domain_get_assemblies`, "pointer", ["pointer", "pointer"]);
+        return function(domain: NativePointer, psize: NativePointer) : NativePointer {
+            const assemblies = library.base.add(NativeApiOffset.offset_s_assemblies).readPointer();
+            const endAssemblies = library.base.add(NativeApiOffset.offset_s_assemblies + 0x08).readPointer();
+            console.log(`${assemblies}-${endAssemblies}`);
+            psize.writeInt(endAssemblies.sub(assemblies).toUInt32() / 8);
+            return assemblies;
+        }
     }
 
     @cache
@@ -189,27 +246,42 @@ export class Api {
 
     @cache
     static get _fieldGetName() {
-        return createNF(this.r`field_get_name`, "utf8string", ["pointer"]);
+        // return createNF(this.r`field_get_name`, "utf8string", ["pointer"]);
+        return function (field: NativePointer): string | null {
+            return field.readPointer().readUtf8String();
+        }
     }
 
     @cache
     static get _fieldGetOffset() {
-        return createNF(this.r`field_get_offset`, "int32", ["pointer"]);
+        // return createNF(this.r`field_get_offset`, "int32", ["pointer"]);
+        return function (field: NativePointer): number {
+            return field.add(0x18).readS32();
+        }
     }
 
     @cache
     static get _fieldGetStaticValue() {
-        return createNF(this.r`field_static_get_value`, "void", ["pointer", "pointer"]);
+        //return createNF(this.r`field_static_get_value`, "void", ["pointer", "pointer"]);
+        return function (field: NativePointer, value: NativePointer) {
+            const il2cpp_field_static_get_value = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_field_static_get_value),
+                    "void", ["pointer", "pointer"]);
+            il2cpp_field_static_get_value(field, value);
+        };
     }
 
     @cache
     static get _fieldGetStaticValue2() {
-        return createNF(this.r`field_static_get_value`, "void", ["pointer", "pointer"]);
+        //return createNF(this.r`field_static_get_value`, "void", ["pointer", "pointer"]);
+        return this._fieldGetStaticValue;
     }
 
     @cache
     static get _fieldGetType() {
-        return createNF(this.r`field_get_type`, "pointer", ["pointer"]);
+        // return createNF(this.r`field_get_type`, "pointer", ["pointer"]);
+        return function (field: NativePointer): NativePointer {
+            return field.add(0x08).readPointer();
+        }
     }
 
     @cache
@@ -264,12 +336,19 @@ export class Api {
 
     @cache
     static get _imageGetClass() {
-        return createNF(this.r`image_get_class`, "pointer", ["pointer", "uint"]);
+        //return createNF(this.r`image_get_class`, "pointer", ["pointer", "uint"]);
+        return function (image: NativePointer, index: number): NativePointer {
+            const GetTypeInfoFromTypeDefinitionIndex = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_image_get_class), "pointer", ["uint32"]);
+            return GetTypeInfoFromTypeDefinitionIndex(index + image.add(NativeApiOffset.offset_il2cpp_metadata_typestart).readU32()) as NativePointer;
+        }
     }
 
     @cache
     static get _imageGetClassCount() {
-        return createNF(this.r`image_get_class_count`, "uint32", ["pointer"]);
+        //return createNF(this.r`image_get_class_count`, "uint32", ["pointer"]);
+        return function (image: NativePointer): number {
+            return image.add(NativeApiOffset.offset_il2cpp_image_get_class_count).readU32();
+        }
     }
 
     @cache
@@ -279,7 +358,11 @@ export class Api {
 
     @cache
     static get _imageGetName() {
-        return createNF(this.r`image_get_name`, "utf8string", ["pointer"]);
+        //return createNF(this.r`image_get_name`, "utf8string", ["pointer"]);
+        return function (image: NativePointer) : string | null {
+            //console.log(image.readPointer().readUtf8String());
+            return image.readPointer().readUtf8String();
+        }
     }
 
     @cache
@@ -336,7 +419,11 @@ export class Api {
 
     @cache
     static get _methodGetName() {
-        return createNF(this.r`method_get_name`, "utf8string", ["pointer"]);
+        // return createNF(this.r`method_get_name`, "utf8string", ["pointer"]);
+        return function (method: NativePointer): string | null {
+            const il2cpp_method_get_name = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_method_get_name), "pointer", ["pointer"]);
+            return (il2cpp_method_get_name(method) as NativePointer).readUtf8String();
+        }
     }
 
     @cache
@@ -356,7 +443,10 @@ export class Api {
 
     @cache
     static get _methodGetReturnType() {
-        return createNF(this.r`method_get_return_type`, "pointer", ["pointer"]);
+        // return createNF(this.r`method_get_return_type`, "pointer", ["pointer"]);
+        return function (method: NativePointer): NativePointer {
+            return method.add(0x20).readPointer();
+        }
     }
 
     @cache
@@ -371,7 +461,11 @@ export class Api {
 
     @cache
     static get _methodIsInstance() {
-        return createNF(this.r`method_is_instance`, "bool", ["pointer"]);
+        // return createNF(this.r`method_is_instance`, "bool", ["pointer"]);
+        return function (method: NativePointer): boolean {
+            const il2cpp_method_is_instance = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_method_is_instance), "bool", ["pointer"]);
+            return il2cpp_method_is_instance(method) as boolean;
+        }
     }
 
     @cache
@@ -411,12 +505,18 @@ export class Api {
 
     @cache
     static get _stringChars() {
-        return createNF(this.r`string_chars`, "pointer", ["pointer"]);
+        // return createNF(this.r`string_chars`, "pointer", ["pointer"]);
+        return function (str: NativePointer): NativePointer {
+            return str.add(0x14);
+        }
     }
 
     @cache
     static get _stringLength() {
-        return createNF(this.r`string_length`, "int32", ["pointer"]);
+        // return createNF(this.r`string_length`, "int32", ["pointer"]);
+        return function (str: NativePointer): number {
+            return str.add(0x10).readU32();
+        }
     }
 
     @cache
@@ -436,7 +536,11 @@ export class Api {
 
     @cache
     static get _threadAttach() {
-        return createNF(this.r`thread_attach`, "void", ["pointer"]);
+        //return createNF(this.r`thread_attach`, "void", ["pointer"]);
+        return function (domain: NativePointer) {
+            const il2cpp_thread_attach = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_thread_attach), "void", ["pointer"]);
+            il2cpp_thread_attach(domain)
+        }
     }
 
     @cache
@@ -456,12 +560,19 @@ export class Api {
 
     @cache
     static get _typeGetName() {
-        return createNF(this.r`type_get_name`, "utf8string", ["pointer"]);
+        // return createNF(this.r`type_get_name`, "utf8string", ["pointer"]);
+        return function (type: NativePointer): string | null {
+            const il2cpp_type_get_name = new NativeFunction(library.base.add(NativeApiOffset.offset_il2cpp_type_get_name), "pointer", ["pointer"]);
+            return (il2cpp_type_get_name(type) as NativePointer).readUtf8String();
+        }
     }
 
     @cache
     static get _typeGetTypeEnum() {
-        return createNF(this.r`type_get_type`, "int", ["pointer"]);
+        // return createNF(this.r`type_get_type`, "int", ["pointer"]);
+        return function (type: NativePointer): number {
+            return type.add(10).readS32();
+        }
     }
 
     @cache
@@ -479,12 +590,17 @@ export class Api {
         return [library, createMissingApi()];
     }
 
+    // my: 当r()从导出函数中找不到api时，在这里手动硬编码查找
+    private static my_r(exportName: readonly string[]) {
+    }
+
     private static r(exportName: readonly string[]) {
         const name = "il2cpp_" + exportName;
         for (const source of this.sources) {
             const result = source instanceof Module ? source.findExportByName(name) : source[name];
             if (result) return result as NativePointer;
         }
+
         raise(`Couldn't resolve export "${name}".`);
     }
 }
